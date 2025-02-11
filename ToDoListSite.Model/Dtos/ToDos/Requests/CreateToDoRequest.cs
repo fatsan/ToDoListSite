@@ -13,7 +13,7 @@ public sealed record CreateToDoRequest(
     Priority Priority,
     int CategoryId,
     bool Completed,
-    Category Category,
-    string UserId,
-    User User
+    //Category Category,
+    string UserId
+    //User User
     );

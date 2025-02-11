@@ -1,8 +1,9 @@
 ﻿
 
 using AutoMapper;
+using Azure;
 using Core.Responses;
-using Microsoft.Extensions.Hosting;
+
 using ToDoListSite.DataAccess.Abstracts;
 using ToDoListSite.DataAccess.Concretes;
 using ToDoListSite.Models.Dtos.ToDos.Requests;
@@ -20,12 +21,14 @@ public class ToDoService : IToDoService
     private readonly IMapper _mapper;
     private readonly ToDoBusinessRules _businessRules;
 
-    //public ReturnModel<ToDoResponseDto> Add(CreateToDoRequest create)
-    //{
-    //    throw new NotImplementedException();
-    //}
+    public ToDoService(ITodoRepository toDoRepository, IMapper mapper, ToDoBusinessRules rules)
+    {
+        _toDoRepository = toDoRepository;
+        _mapper = mapper;
+        _businessRules = rules;
+    }
 
-    public ReturnModel<ToDoResponseDto> Add(CreateToDoRequest create) //, Guid userId)
+    public ReturnModel<ToDoResponseDto> Add(CreateToDoRequest create, string userId)
     {
         ToDo createdToDo = _mapper.Map<ToDo>(create);
         createdToDo.Id = Guid.NewGuid();
@@ -88,6 +91,38 @@ public class ToDoService : IToDoService
         };
     }
 
+    public ReturnModel<List<ToDoResponseDto?>> GetToDoByNameClue(string name)
+    {
+        var toDos = _toDoRepository.GetAll(x => x.Title.Contains(name) || x.Description.Contains(name), false);
+        var responses = _mapper.Map<List<ToDoResponseDto?>>(toDos);
+
+        return new ReturnModel<List<ToDoResponseDto?>>
+        {
+            Data = responses,
+            Message = string.Empty,
+            StatusCode = 200,
+            Success = true
+
+        };
+    }
+    public ReturnModel<List<ToDoResponseDto?>> GetToDoByImportance()
+    {
+        var toDos1 = _toDoRepository.GetAll(x => x.Priority == Priority.High, false);
+        var toDos2 = _toDoRepository.GetAll(x => x.Priority == Priority.Normal, false);
+        var toDos3 = _toDoRepository.GetAll(x => x.Priority == Priority.Low, false);
+        var AllTodos = new[] { toDos1, toDos2, toDos3 };
+        var responses = _mapper.Map<List<ToDoResponseDto?>>(AllTodos);
+
+        return new ReturnModel<List<ToDoResponseDto?>>
+        {
+            Data = responses,
+            Message = string.Empty,
+            StatusCode = 200,
+            Success = true
+
+        };
+    }
+
     public ReturnModel<ToDoResponseDto> Remove(Guid id)
     {
         ToDo toDo = _toDoRepository.GetById(id);
@@ -132,4 +167,6 @@ public class ToDoService : IToDoService
             Success = true
         };
     }
+
+
 }

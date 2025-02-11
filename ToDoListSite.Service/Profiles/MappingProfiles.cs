@@ -1,6 +1,6 @@
 ﻿
 using AutoMapper;
-using Microsoft.Extensions.Hosting;
+
 using ToDoListSite.Models.Dtos.Categories.Requests;
 using ToDoListSite.Models.Dtos.Categories.Responses;
 using ToDoListSite.Models.Dtos.ToDos.Requests;

@@ -1,10 +1,4 @@
 ﻿using Core.Exceptions;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ToDoListSite.Models.Entities;
 
 namespace ToDoListSite.Service.Rules;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ToDoListSite.Service.Abstratcts;
 
 namespace ToDoListSite.API.Controllers;
 
@@ -17,4 +18,8 @@ public class UsersController(IUserService _userService) : ControllerBase
         var result = await _userService.GetByEmailAsync(email);
         return Ok(result);
     }
+
+
+
+
 }

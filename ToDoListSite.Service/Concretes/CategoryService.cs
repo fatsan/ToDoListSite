@@ -1,7 +1,6 @@
 ﻿
 using AutoMapper;
 using Core.Responses;
-using Microsoft.Extensions.Hosting;
 using ToDoListSite.DataAccess.Abstracts;
 using ToDoListSite.Models.Dtos.Categories.Requests;
 using ToDoListSite.Models.Dtos.Categories.Responses;
@@ -27,7 +26,7 @@ public class CategoryService : ICategoryService
 
 
 
-    public ReturnModel<CategoryResponseDto> Add(CreateCategoryRequest create)
+    public ReturnModel<CategoryResponseDto> Add(CreateCategoryRequest create, string userId)
     {
         Category createdCategory = _mapper.Map<Category>(create);
 

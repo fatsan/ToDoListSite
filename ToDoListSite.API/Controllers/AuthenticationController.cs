@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-
+using ToDoListSite.Models.Dtos.Users.Requests;
+using ToDoListSite.Service.Abstratcts;
 namespace ToDoListSite.API.Controllers;
 
 [Route("api/[controller]")]
@@ -19,6 +20,7 @@ public class AuthenticationController(IAuthenticationService _authenticationServ
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDto dto)
+
     {
         var result = await _authenticationService.RegisterAsync(dto);
         return Ok(result);
